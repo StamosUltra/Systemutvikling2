@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Eksempel 5</title>
+        <meta charset="UTF-8">
+        <script src="jquery-1.11.1.min.js"></script>
+        <script language="javascript">
+            $(document).ready(function() {
+                $("#searchButton").click(function () {
+                    var url = "rest/search/" + $("#searchString").val();               
+                    $.get(url, function(data){
+                        alert(data);
+                        $("#result").html(data);
+                    });
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <input id="searchString" type="text" name="searchString">
+        <input id="searchButton" type="button" value="Søk">
+        <p id="result"></p>
+    </body>
+</html>
