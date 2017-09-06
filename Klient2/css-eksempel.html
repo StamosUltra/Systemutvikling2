@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Nettsiden min</title>
+
+    <style>
+      p, h1 {
+      	color : #FF6666;
+      	background-color: yellow;
+      }
+      img {
+      	border: 1px solid black;
+      	padding: 10px;
+      }
+      #content {
+        position: relative;
+      	border: 1px dotted black;
+        width: 80%;
+      	min-width: 200px;
+      	max-width:800px;
+      	margin: auto;
+      }
+      header {
+      	border: 2px solid red;
+      }
+      .kolonne {
+      	border: 2px solid green;
+      	float: left;
+      	width: 200px;
+      }
+      #favoritter {
+		position: relative;
+        left: 2px;
+        top: 2px;
+    	
+      }
+      .clear {clear: both;}
+    </style>
+  </head>
+
+  <body>
+	<div id="content">
+	  <header>
+		<h1>Velkommen til nettsiden min!</h1>
+	  </header>
+
+	  <div id="om_meg" class="kolonne">
+		<p>Her er et bilde av meg:</p>
+		<img src="bildeavmeg.jpg" height="150" />
+	  </div>
+
+	  <div id="min_hobby" class="kolonne">
+		<h2>Min hobby</h2>
+
+		<p>Min store hobby er &aring; samle p&aring; frimerker. <br/> Les mer om frimerker
+		  <a href="http://no.wikipedia.org/wiki/Frimerke">her</a>.
+		</p>
+	  </div>
+
+	  <div id="favoritter" class="kolonne">
+		<h3>Mine favorittfrimerker</h3>
+		<ol id="bindersliste">
+		  <li>Det r&oslash;de frimerket</li>
+		  <li>Det rosa frimerket</li>
+		</ol>
+	  </div>
+
+	  <div class="clear"></div>
+    </div>
+  </body>
+</html>
