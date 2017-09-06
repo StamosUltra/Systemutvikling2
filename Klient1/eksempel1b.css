@@ -6,16 +6,16 @@ ul {
     list-style-type: none; 
 }
 
-li {
+li { /* Dette er en tag */
     float: left;    
-    border: 1px solid black;
+    border: 1px solid black;    /*Border is 1 pixel wide and black*/
     padding: 8px;
     background-color: blue;
 	margin: 2px;
 }
 
-li:hover {
-    background-color: darkblue;
+li:hover {                      /*When mouse is hovering above the element*/
+    background-color: darkblue; /*Link color*/
 }
 a {
     color: white;

@@ -1,4 +1,4 @@
-.meny {
+.meny { /* Alle elementer med class = "meny", skal ha denne stilen" */
     float: left;
     width: 100%;  
     padding: 0px;
@@ -6,7 +6,7 @@
     list-style-type: none; 
 }
 
-.menyelement {
+.menyelement { /* Alle elementer med class = "menyelement", skal ha denne stilen" */
     float: left;    
     border: 1px solid black;
     padding: 8px;
