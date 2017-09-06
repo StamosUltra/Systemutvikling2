@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Eksempel 2</title>
+        <script src="jquery-1.11.1.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $("#myid").click(function(){
+                    alert("HTML: " + $("#myid").html());                   
+                    alert("Text: " + $("p").text());                   
+                    alert("Val: " + $("input").val());                   
+                });
+            });
+        </script>
+    </head>
+
+    <body>
+        <div id="myid"><p>Tekst <input type="button" value="Knapp"></p></div>
+    </body>
+</html>

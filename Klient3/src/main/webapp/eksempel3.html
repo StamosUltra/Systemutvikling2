@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Eksempel 3</title>
+        <style>
+            td {width: 100px; height: 100px; border: 2px solid green}
+            .player1 {background-color: blue}
+            .player2 {background-color: red}
+            .unselected {background-color: lightgray}
+        </style>
+        <script src="jquery-1.11.1.min.js"></script>
+        <script>
+            function select(activePlayer, otherPlayer, square) {
+                if(square.hasClass(activePlayer)) {
+                    square.removeClass(activePlayer);
+                } else if(!square.hasClass(otherPlayer)) {
+                   square.addClass(activePlayer);         
+                }               
+            }
+            $(document).ready(function(){
+                $("td").dblclick(function(){
+                    select("player1", "player2", $(this));
+                });
+                $("td").click(function(){
+                    select("player2", "player1", $(this));
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <table>
+            <tr><td/><td/><td/><td/><td/></tr>
+            <tr><td/><td/><td/><td/><td/></tr>
+            <tr><td/><td/><td/><td/><td/></tr>
+            <tr><td/><td/><td/><td/><td/></tr>
+            <tr><td/><td/><td/><td/><td/></tr>
+        </table>
+    </body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Canvas-eksempel</title>
+  </head>
+  <body>
+
+    <canvas id="lerret" width="300" height="250" style="border:2px solid #000000;">
+      Nettleseren din st&oslash;tter ikke canvas-taggen i HTML5.
+    </canvas>
+
+    <script>
+      // Finn elementet
+      var c=document.getElementById("lerret");
+
+      // Lag tegneobjekt
+      var ctx=c.getContext("2d");
+
+      // Tegn rødt rektangel
+      ctx.fillStyle="#FF0000";
+      ctx.fillRect(0,0,150,75);
+
+      // Lag gradient
+      var gradient=ctx.createRadialGradient(200,150,100,0,0,200);
+      gradient.addColorStop("0","red");
+      gradient.addColorStop("0.5","green");
+      gradient.addColorStop("1.0","blue");
+
+      // Knytt objektet til gradienten og tegn
+      ctx.fillStyle=gradient;
+      ctx.arc(200,150,100,0,2*Math.PI);
+      ctx.fill();
+
+    </script>
+  </body>
+</html>

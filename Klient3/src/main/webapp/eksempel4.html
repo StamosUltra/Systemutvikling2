@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Eksempel 4</title>
+        <style>
+            #myid {width: 100px; height: 100px; background-color: blue; position: fixed}
+        </style>
+        <script src="jquery-1.11.1.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $("#myid").animate({left: "200px", top: "200px"}, "slow", function(){
+                    $("#myid").slideUp("slow", "swing", function(){   
+                        $("#myid").fadeIn(4000);                                 
+                    });           
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div id="myid"></div>
+    </body>
+</html>
