@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Oving3-1</title>
+    <script language="javascript">
+        function swapImage(path) {
+            var img = document.getElementById("img1");
+            img.src = path;
+        }
+    </script>
+</head>
+<body>
+        <h1>Look at this dog!</h1>
+        <img id="img1" src="sneeze_dog.jpg" alt="Cute dog"
+             onmouseover=swapImage("sneezing_cat.jpg")
+             onmouseleave=swapImage("sneeze_dog.jpg")>
+</body>
+</html>

@@ -10,6 +10,21 @@
          .tabellrute{ background-color: #ccc;
          }
 </style>
+	<script language="JavaScript">
+		function changeColor(event, color){
+		    e = event.target;
+		    if (e.className == "tabellrute" || e.className == "clicked") {	// Checks to see if the clicked element is a table or clicked
+		        if (e.className == "tabellrute") {
+                    e.style.backgroundColor = color;
+                    e.className = "clicked";
+				}
+				else {
+		            e.style.backgroundColor = "#ccc";
+		            e.className = 	"tabellrute";
+                }
+			}
+        }
+	</script>
 </head>
 
 <body>
@@ -20,7 +35,7 @@ f&oslash;rstemann (r&oslash;dt) velger rute, klikker han en gang, og
 n&aring;r andremann (gr&oslash;nt) velger rute, dobbeltklikker han.
 </p>
 
-<table id="bondesjakkbrett">
+<table id="bondesjakkbrett" onclick="changeColor(event,'red')" ondblclick="changeColor(event, 'green')">
 	<tr>
 	       <td class="tabellrute"></td>
 	       <td class="tabellrute"></td>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Oving3-3</title>
+
+</head>
+<body>
+<h1 id="daysTillChristmas" >placeholder</h1>
+<h2 id="christmas"></h2>
+<h2 id="thisDate"></h2>
+<script language="JavaScript">
+    var text = document.getElementById("daysTillChristmas");
+    var oneDay = 24*60*60*1000;
+    var christmas = new Date(new Date(2017,11,24));
+    var thisDate = new Date();
+    document.getElementById("christmas").innerHTML = christmas.getTime().toString();
+    document.getElementById("thisDate").innerHTML = thisDate.getTime().toString();
+
+    var days = Math.round(Math.abs(thisDate.getTime() - christmas.getTime())/(oneDay));
+
+    if (days > 31*3) text.style.color = "black";
+    else if (days > 31) text.style.color = "green";
+    else text.style.color = "red";
+    text.innerHTML = days;
+
+</script>
+</body>
+</html>
