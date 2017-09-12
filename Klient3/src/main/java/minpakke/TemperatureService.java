@@ -1,4 +1,4 @@
-package minpakke;
+application minpakke;
 
 import java.util.ArrayList;
 import java.util.List;

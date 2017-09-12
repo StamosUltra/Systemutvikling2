@@ -1,4 +1,4 @@
-package minpakke;
+application minpakke;
 
 /**
  * @author nilstes

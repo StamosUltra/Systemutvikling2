@@ -1,4 +1,4 @@
-package minpakke;
+application minpakke;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
