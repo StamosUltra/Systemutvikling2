@@ -1,3 +1,7 @@
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 @Path("/kunder/")
 public class KundeService {
 	private static Map<String,Kunde> kunder = new HashMap<>();
