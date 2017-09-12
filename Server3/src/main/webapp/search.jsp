@@ -3,7 +3,7 @@
 <%
     String s = request.getParameter("search");
     Cookie c = new Cookie("search", s);
-    c.setMaxAge(31536000); // 1 år i sekunder
+    c.setMaxAge(31536000); // 1 Ã¥r i sekunder
     response.addCookie(c);
 
     // Find products in DB

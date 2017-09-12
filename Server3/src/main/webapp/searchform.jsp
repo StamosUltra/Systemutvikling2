@@ -18,10 +18,10 @@
         <title>JSP Page</title>
     </head>
     <body>
-        Søk:
-        <form action="søk.jsp">
+        SÃ¸k:
+        <form action="search.jsp">
             <input name="search" type="text" value="<%= s %>">
-            <input type="submit" value="Søk">
+            <input type="submit" value="SÃ¸k">
         </form>
     </body>
 </html>
