@@ -1,20 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f2bc0b3d-b9dc-40a6-b76a-e6bbb1d3c469" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/ModernResturant/.idea/.name" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/ModernResturant/exercise4.iml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/ModernResturant/src/main/java/application/Kunde.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/ModernResturant/src/main/java/application/KundeService.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ModernResturant/.idea/artifacts/exercise4_war_exploded.xml" afterPath="$PROJECT_DIR$/ModernResturant/.idea/artifacts/exercise4_war_exploded.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ModernResturant/.idea/compiler.xml" afterPath="$PROJECT_DIR$/ModernResturant/.idea/compiler.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ModernResturant/.idea/modules.xml" afterPath="$PROJECT_DIR$/ModernResturant/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ModernResturant/pom.xml" afterPath="$PROJECT_DIR$/ModernResturant/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ModernResturant/src/main/webapp/index.html" afterPath="$PROJECT_DIR$/ModernResturant/src/main/webapp/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/exercise4/src/main/webapp/index.html" afterPath="$PROJECT_DIR$/exercise4/src/main/webapp/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest-template/src/main/webapp/jquery-3.2.1.min.js" afterPath="$PROJECT_DIR$/rest-template/src/main/webapp/jquery-3.2.1.min.js" />
-    </list>
+    <list default="true" id="f2bc0b3d-b9dc-40a6-b76a-e6bbb1d3c469" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
