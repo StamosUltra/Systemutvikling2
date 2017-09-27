@@ -11,14 +11,14 @@
     <script>
         $(document).ready(function(){
             // Bind opp tabellen mot rest-ressursen '/kunder'
-            $('#myTable').DataTable( {
+                $('#myTable').DataTable( {
                 ajax: {
                     url: 'rest/kunder',
                     dataSrc: ''
                 },
                 columns: [
                     { data: 'id' },
-                    { data: 'navn' }
+                    { data: 'name' }
                 ]
             });
 

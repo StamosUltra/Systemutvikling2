@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>Make a reservation</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<body>
+    <h1>Reservajon</h1>
+    <br>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 id="heading" class="panel-tile"></h4>
+        </div>
+        <div id="confirmSeats" class="panel-body">No data from server</div>
+    </div>
+
+    <div id="div_inputs" class="panel panel-default">
+        <button id="button_items">Legg til varer</button>
+        <br>
+        <table id="tableChosenItems" class="table">
+            <thead>
+            <tr>
+                <th>Vare</th>
+                <th>Antall</th>
+            </tr>
+            </thead>
+        </table>
+        <div class="panel-body">
+            <h4 id="confirmTime">empty</h4>
+        </div>
+        <br>
+        <button id="button_pay">Gå til betaling</button>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Velg varer</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="menu" style="display: inline-block">
+                        <h4>Menu:</h4>
+                        <p class='line' id="menuItem0">Rett</p>
+                        <p class='line' id="menuType0">Type</p>
+                        <p class='line' id="menuAllergy0">Allergier</p>
+                        <p class='line' id="menuinput0">Antall</p>
+                        <br>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="createFinal" data-dismiss="modal">Legg til</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="paymentModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Legg inn kortdetaljer</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="cardDetails">
+                        <h4>Kortnummer:</h4>
+                        <br>
+                        <input id="cardNumber" type="number">
+                    </div><div class="cardDetails">
+                        <h4>Utløpsdato:</h4>
+                        <br>
+                        <input id="cardExpiration" type="text">
+                    </div><div class="cardDetails">
+                        <h4>Kontroll-siffer:</h4>
+                        <br>
+                        <input id="cardControl" type="number">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="createFinal2" data-dismiss="modal">Betal</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+<style>
+    .line {
+        margin: 10px;
+        display:inline;
+    }
+</style>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="http://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+    <script language="JavaScript">
+
+        function fillTable(list, callback) {
+            for(var j=0; j<list.length; j++){
+                var menuItem = "<p class='line' id='menuItem"+(j+1)+"'>"+list[j].name+"</p>";
+                var menuType = "<p class='line' id='menuType"+(j+1)+"'>"+list[j].type+"</p>";
+                var menuAllergies = "<p class='line'  id='menuAllergy"+(j+1)+"'>"+list[j].allergies+"</p>";
+                var menuInput = "<input class='line' id='menuInput"+(j+1)+"' type='number'><br>";
+                $(".menu").append(menuItem + menuType + menuAllergies + menuInput);
+            }
+            callback();
+        }
+
+        $(document).ready(function () {
+            var people = localStorage.getItem("people");
+            console.log(people);
+            var from = localStorage.getItem("from");
+            var date = new Date(parseInt(from));
+            document.getElementById("heading").innerHTML= "spisende: " + people + ", " + date;
+            var items;
+            var fullTable = false;
+            var enoughSeats = false;
+            var availableTables;
+
+            $.ajax({
+                url: 'rest/tables/' + people,
+                type: 'GET',
+                contentType: 'application/json; charset=utf-8',
+                success: function (result) {
+                    console.log(result);
+                    availableTables = result;
+                    if (availableTables.length > 0) $("#confirmSeats").html("Enough seats");
+                    else $("#confirmSeats").html("Not enough seats");
+                },
+                error: function () {
+                    $("#confirmSeats").html("Server error");
+                }
+            });
+
+
+            $("#button_items").click(function () {
+                $.ajax({
+                    url: 'rest/items',
+                    type: 'GET',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    success: function (result) {
+                        items = result;
+                        localStorage.setItem("menu", items);
+                        if(!fullTable) {
+                            fillTable(items, function () {
+                                fullTable = true;
+                                $("#myModal").modal();
+                            });
+                        } else $("#myModal").modal();
+                    },
+                    error: function () {
+                        alert("could not retrieve data from server")
+                    }
+                })
+            });
+            $("#createFinal").click(function () {
+                console.log(document.getElementsByClassName("line"));
+                console.log(document.getElementsByClassName("line").length);
+                var elements = document.getElementsByClassName("line");
+                var items = [];
+                var inputs = [];
+                var time = 0;
+                for(var i = 4; i<elements.length; i+=4){
+                    items.push(elements[i].innerHTML);
+                }
+                for(var j = 7; j<elements.length; j+=4){
+                    var inp = elements[j].value;
+                    console.log(inp);
+                    inputs.push(inp);
+                }
+                var itemsInputs = [];
+                console.log(inputs);
+                console.log(items);
+                for (i=0; i<items.length; i++){
+                    if(inputs[i]==="") inputs[i] = 0;
+                    console.log(items[i] + " " + inputs[i]);
+                    itemsInputs.push([items[i], inputs[i]]);
+                }
+
+
+                for(var k = 5; k<elements.length; k+=4){
+                    var starter = false;
+                    var main = false;
+                    var desert = false;
+
+                    if (elements[k].innerHTML === "STARTER"){
+                        starter = true;
+                    }
+                    else if (elements[k].innerHTML === "MAIN"){
+                        starter = true;
+                    }
+                    else if (elements[k].innerHTML === "DESERT"){
+                        starter = true;
+                    }
+                }
+                if (starter) time += 30;
+                if (main) time += 30;
+                if (desert) time += 30;
+                if (time === 0) time = 30;
+                time *= 60*1000; // to milliseconds
+                console.info(items);
+                console.info(inputs);
+                console.log("time: " + time);
+
+                var end = parseInt(localStorage.getItem("from")) + time;
+                console.log(end);
+
+                var tableChosenItems = document.getElementById("tableChosenItems");
+                for(var l = 1; l<=items.length; l++) {
+                    var row = tableChosenItems.insertRow(l);
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    cell1.innerHTML = items[l-1];
+                    if (inputs[l-1] === ""){
+                        cell2.innerHTML = "0";
+                    }
+                    else cell2.innerHTML = inputs[l-1];
+                }
+
+                localStorage.setItem("options", items);
+                localStorage.setItem("options", inputs);
+
+                // validate stuff from servlet
+                console.log("from: " + parseInt(from));
+                console.log("to: " + parseInt(end));
+
+                /**
+                 * Goes through all available tables in order to find a possible one.
+                 * The loop doesn't break, because 'var i' doesn't want to be updated and 'break' is illegal
+                 * If another table available, the reservation will be written over.
+                 *
+                 * should be a boolean that keeps track of reservations, and initiates a 'PUT' if a reservation needs to be updated
+                 */
+                for (i=0; i<availableTables.length; i++) {
+                    console.log("i: " + i);
+                    var tableId = parseInt(availableTables[i].tableId);
+                    console.log(tableId);
+                    $.ajax({
+                        url: 'rest/reservations/',
+                        type: 'POST',
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify({
+                            reservationId: from,
+                            tableId: tableId,
+                            people: people,
+                            from: parseInt(from),
+                            to: parseInt(end),
+                            items: itemsInputs
+                        }),
+                        success: function (data) {
+                            console.log(data);
+                            enoughSeats = true;
+                            console.log("data");
+                            $("#confirmTime").html("reservation has been made");
+                            i = availableTables.length+1;
+                            console.log(i);
+                        },
+                        error: function (data) {
+                            console.log(data);
+                            console.log("err: " + data);
+                        }
+                    })
+
+                }
+
+            });
+
+            $("#button_pay").click(function () {
+                alert("yo");
+                $("#paymentModal").modal('show');
+            });
+
+            $("#createFinal2").click(function () {
+                $("#paymentModal").modal('hide');
+            })
+        })
+    </script>
+</body>
+</html>

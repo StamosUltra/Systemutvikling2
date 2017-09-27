@@ -1,0 +1,6 @@
+application\Item.class
+application\ReservationService.class
+application\Table.class
+application\ItemService.class
+application\Reservation.class
+application\TableService.class

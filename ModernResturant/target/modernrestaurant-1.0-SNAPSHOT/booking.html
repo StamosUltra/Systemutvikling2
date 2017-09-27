@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="http://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+    <title>Make a reservation</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script language="JavaScript">
+        $(document).ready(function () {
+            $.getJSON("rest/items", function (data) {
+                console.log(JSON.stringify(data));
+            })
+            var people = localStorage.getItem("people");
+            var from = localStorage.getItem("from");
+            var date = new Date(parseInt(from));
+            document.getElementById("heading").innerHTML= "spisende: " + people + ", " + date;
+            var items;
+
+            $("#button_items").click(function () {
+                $.ajax({
+                    url: 'rest/items',
+                    type: 'GET',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    success: function (result) {
+                        items = result;
+                        $("#myModal").show();
+                    },
+                    error: function () {
+                        alert("could not retrieve data from server")
+                    }
+                })
+            })
+
+        })
+    </script>
+
+<body>
+    <h1>Reservajon</h1>
+    <br>
+    <h4 id="heading"></h4>
+    <div id="div_inputs">
+        <button id="button_items">Legg til varer</button>
+        <br>
+        <ul>
+            <li id="list_items"></li>
+        </ul>
+        <button id="button_pay">Gå til betaling</button>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Velg varer</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <h4>Menu:</h4>
+                        <table style="width:100%">
+                            <tr>
+                                <th>Item</th>
+                                <th></th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="createFinal" data-dismiss="modal">Create
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

@@ -1,77 +1,13 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 <head>
+    <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css">
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
     <title>Modern Resturant</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css">
 
-</head>
-<body>
-    <div class="panel panel-default">
-        <div class="panel panel-heading">
-            <h1>Velkommen til Modern Restaurant</h1>
-        </div>
-        <div id="div1" class="panel panel-body">
-            <h4 class="header">Antall personer</h4>
-            <h4 class="header">Dato</h4>
-            <h4 class="header">Fra</h4>
-            <br>
-            <input id="input_people" type="number">
-            <input id="input_date" type="date">
-            <input id="input_from" type="time">
-            <button id="button_order">Reserver</button>
-        </div>
-    </div>
-
-    <div class="panel default-panel">
-        <div class="panel panel-heading">
-            <h1>Bord</h1>
-            </div>
-        <div class="panel panel-body">
-            <table id="tableTable" class="table">
-                <thead>
-                <tr><th>TableID</th><th>Seats</th></tr>
-                </thead>
-            </table>
-        </div>
-    </div>
-
-    <div class="panel default-panel">
-        <div class="panel panel-heading">
-            <h1>Reservasjoner</h1>
-        </div>
-        <div class="panel panel-body">
-            <table id="reservationTable" class="table">
-                <thead>
-                <tr><th>ReservationID</th><th>TableId</th><th>People</th><th>From</th><th>To</th><th>Items</th></tr>
-                </thead>
-            </table>
-        </div>
-    </div>
-
-    <div class="panel default-panel">
-        <div class="panel panel-heading">
-            <h1>Meny</h1>
-        </div>
-        <div class="panel panel-body">
-            <table id="itemsTable" class="table">
-                <thead>
-                <tr><<th>Type</th><th>Name</th><th>Allergies</th></tr>
-                </thead>
-            </table>
-        </div>
-    </div>
-
-    <style>
-        .header {
-            margin: 10px;
-            display:inline;
-        }
-    </style>
-    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="http://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
     <script language="JavaScript">
         function miliseconds(hrs, min) {
             return (hrs*60*60 + min*60)*1000;
@@ -158,51 +94,6 @@
 
             var tables = [table1, table2, table3];
 
-            var res1 = {
-                reservationId: "root",
-                tableId: 1,
-                people: 1,
-                from: 0,
-                to: 0,
-                items:[
-                    ["",0]
-                ]
-            };
-
-            var res2 = {
-                reservationId: "user1",
-                tableId: 1,
-                people: 1,
-                from: 1000,
-                to: 2000,
-                items:[
-                    ["",0]
-                ]
-            };
-
-            var res3 = {
-                reservationId: "user2",
-                tableId: 1,
-                people: 1,
-                from: 500,
-                to: 1500,
-                items:[
-                    ["",0]
-                ]
-            };
-
-            var res4 = {
-                reservationId: "user3",
-                tableId: 1,
-                people: 1,
-                from: 1500,
-                to: 2500,
-                items:[
-                    ["",0]
-                ]
-            };
-
-
             $.ajax({
                 url: 'rest/items',
                 type: 'POST',
@@ -244,54 +135,57 @@
                 }
             });
 
-            $.ajax({
-                url: 'rest/reservations',
-                type: 'POST',
-                data: JSON.stringify(res1),
-                contentType: 'application/json; charset=utf-8',
-                success: function (result) {
-                    console.log(result);
-                    $("#reservationTable").DataTable({
-                        ajax: {
-                            url: 'rest/reservations',
-                            dataSrc: ''
-                        },
-                        columns: [
-                            {data: 'reservationId'},
-                            {data: 'tableId'},
-                            {data: 'people'},
-                            {data: 'from'},
-                            {data: 'to'},
-                            {data: 'items'}
-
-                        ]
-                    });
+            $("#reservationTable").DataTable({
+                ajax: {
+                    url: 'rest/reservations',
+                    dataSrc: ''
                 },
-                error: function (result) {
-                    console.log(result);
-                }
+                columns: [
+                    {data: 'reservationId'},
+                    {data: 'tableId'},
+                    {data: 'people'},
+                    {data: 'date'},
+                    {data: 'from'},
+                    {data: 'to'}
+                ]
             });
+
+            /*
+            $("#create").click(function () {
+                alert("create clicked");
+                $.ajax({
+                    url: 'rest/tables',
+                    type: 'POST',
+                    data: JSON.stringify({
+                        tableId: $("#newId").val(),
+                        seats: $("#newName").val(),
+                    }),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    success: function(result) {
+                        $('#myTable').DataTable().ajax.reload();
+                    }
+                });
+            });
+            */
 
 
             $("#button_order").click(function () {
                 var now = new Date().getTime();
                 var people = $("#input_people").val();
+                // var startTime = new Date( quiz["startDay"]+"T"+quiz["startTime"]+":00+02:00");
                 var date = (new Date(document.getElementById("input_date").value)).getTime()-(2*60*60*1000);
                 var from = $("#input_from").val();
                 var timeParts = from.split(":");
                 from = date + miliseconds(timeParts[0], timeParts[1]);
-                console.log("now: " + now);
-                console.log("date: " + date);
-                console.log("from: " + from);
-                console.log("people: " + people);
                 if (people == null || people <= 0) {
                     document.getElementById("input_people").style.backgroundColor="red";
-                    if (isNaN(from) || isNaN(date) || from < now) {
+                    if (from == null || date == null || from < now) {
                         document.getElementById("input_from").style.backgroundColor="red";
                         document.getElementById("input_date").style.backgroundColor="red";
                     }
                 }
-                else if (isNaN(from) || isNaN(date) || from < now) {
+                else if (from == null || date == null || from < now) {
                     document.getElementById("input_from").style.backgroundColor="red";
                     document.getElementById("input_date").style.backgroundColor="red";
                 }
@@ -302,23 +196,63 @@
                 }
 
                 /*
-                 $.ajax({
-                 url: 'rest/reservations',
-                 type: 'POST',
-                 data: JSON.stringify({
-                 reservationId: "Joakim",
-                 tableId: 1,
-                 people: $("#input_people").val(),
-                 date: $("#input_date").val(),
-                 from: $("#input_from").val(),
-                 to: $("#input_to").val(),
-                 }),
-                 contentType: 'application/json; charset=utf-8',
-                 dataType: 'json',
-                 })
-                 */
+                $.ajax({
+                    url: 'rest/reservations',
+                    type: 'POST',
+                    data: JSON.stringify({
+                        reservationId: "Joakim",
+                        tableId: 1,
+                        people: $("#input_people").val(),
+                        date: $("#input_date").val(),
+                        from: $("#input_from").val(),
+                        to: $("#input_to").val(),
+                    }),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                })
+                */
             })
         })
     </script>
+</head>
+<body>
+    <h1>Velkommen til Modern Resturant</h1>
+    <div id="div1">
+        <h6>Antall personer</h6>
+        <h6>Dato</h6>
+        <h6>Fra</h6>
+        <input id="input_people" type="number">
+        <input id="input_date" type="date">
+        <input id="input_from" type="time">
+        <button id="button_order">Reserver</button>
+    </div>
+    <br>
+    <button id="create">create</button>
+    <br>
+    <input id="input_view_order">
+    <br>
+    <p id="test">empty</p>
+    <h1>Kunder</h1>
+    <table id="tableTable" class="display compact">
+        <thead>
+        <tr><th>TableID</th><th>Seats</th></tr>
+        </thead>
+    </table>
+    <br>
+    <input id="newId">
+    <input id="newName">
+
+    <table id="reservationTable" class="display compact">
+        <thead>
+        <tr><th>ReservationID</th><th>TableId</th><th>People</th><th>Date</th><th>From</th><th>To</th></tr>
+        </thead>
+    </table>
+    <br>
+
+    <table id="itemsTable" class="display compact">
+        <thead>
+        <tr><<th>Type</th><th>Name</th><th>Allergies</th></tr>
+        </thead>
+    </table>
 </body>
 </html>
